@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import firebase from "firebase/app";
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, push } from "firebase/database";
 import { useNavigate } from "react-router-dom";
