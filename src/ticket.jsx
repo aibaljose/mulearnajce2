@@ -5,10 +5,7 @@ import "./ticket.css";
 const Ticket = () => {
    // Get 'name' from the location state
    const user = JSON.parse(localStorage.getItem("user"));
-   if(user.name==""){
-    user.name="";
-
-   }
+  
   return (
     <div className="flex h-screen w-full items-center justify-center bg-gradient-to-br from-[#1B0E33] to-[#2B0442]">
       <main className="ticket-system">
@@ -19,7 +16,8 @@ const Ticket = () => {
         <div className="receipts-wrapper">
           <div className="receipts">
             <div className="receipt">
-              <div className="a">{user.name}</div>
+            <div className="a">{user?.name || "Guest"}</div>
+
              
                
               <div className="route">
