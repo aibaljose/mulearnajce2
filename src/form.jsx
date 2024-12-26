@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import firebase from "firebase/app";
+
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, push } from "firebase/database";
 import { useNavigate } from "react-router-dom";
@@ -48,7 +48,7 @@ function RegisterForm() {
         push(usersRef, formData)
             .then(() => {
                 alert("Registration successful!");
-                localStorage.setItem("user", JSON.stringify({ name: formData.firstname + formData.lastname }));
+                localStorage.setItem("user", JSON.stringify({formData }));
                 window.location.href = '/ticket';
                 setFormData({
                     firstname: "",
