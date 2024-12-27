@@ -173,10 +173,10 @@ function RegisterForm() {
                         <option value="" disabled>
 
                         </option>
-                        <option value="student">First</option>
-                        <option value="teacher">Second</option>
-                        <option value="admin">Third</option>
-                        <option value="admin">Fourth</option>
+                        <option value="1">First</option>
+                        <option value="2">Second</option>
+                        <option value="3">Third</option>
+                        <option value="4">Fourth</option>
                     </select>
                     <span>Year</span>
                 </label>
