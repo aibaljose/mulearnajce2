@@ -184,7 +184,7 @@ function RegisterForm() {
 
                 <button className="submit">Submit</button>
                 <p className="signin">
-                    Already registerd see ticket? <a href="/ticket">Ticket</a>
+                    Already registered see ticket? <a href="/ticket">Ticket</a>
                 </p>
             </form>
         </div>
