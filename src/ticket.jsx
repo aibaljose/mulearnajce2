@@ -29,7 +29,7 @@ const Ticket = () => {
 
                             </div>
                             <div className="details">
-                                <div className="a"> Jan 6-8 | 4:10-5:30Pm</div>
+                                <div className="a"> Jan 7-9 | 4:10-5:30Pm</div>
                                 <div><b>Participant</b></div>
                             </div>
                             <div className="details mt-3">
