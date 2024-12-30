@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import Home from "./Home"
 import Ticket from "./ticket"
 import Form from "./form"
+import Dashboard from "./dashboard"
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
           <Route path="/" exact Component={Home} />
           <Route path="/register"  element={<Form />} />
           <Route path="/ticket"  Component={Ticket} />
+          <Route path="/dashboard"  Component={Dashboard} />
         </Routes>
 
       </div>
