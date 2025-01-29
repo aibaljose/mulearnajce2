@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 
-import Home from "./home"
+import Home from "./Home"
 import Ticket from "./ticket"
 import Form from "./form"
 import Dashboard from "./dashboard"
