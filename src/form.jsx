@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { database, ref, push, set } from './firebase';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const TeamRegistrationForm = () => {
+  const navigate = useNavigate(); // Initialize useNavigate
+
   const [teamLead, setTeamLead] = useState({
     name: "",
     email: "",
@@ -17,6 +20,7 @@ const TeamRegistrationForm = () => {
   ]);
 
   const [errors, setErrors] = useState({});
+  const [formError, setFormError] = useState(""); // State for handling form-wide errors
 
   const handleTeamLeadChange = (e) => {
     const { name, value } = e.target;
@@ -91,12 +95,22 @@ const TeamRegistrationForm = () => {
           members,
         });
 
+        // Store team data in localStorage for ticket
+        const ticketData = { teamLead, members };
+        localStorage.setItem("users", JSON.stringify(ticketData));
+
         console.log('Team registered successfully!');
+        
+        // Redirect to the ticket page
+        navigate('/ticket'); // Navigate to the ticket page
+
       } catch (error) {
+        setFormError("Error adding team. Please try again later.");
         console.error('Error adding team: ', error);
       }
     } else {
       console.log('Form validation failed');
+      setFormError("Please fill in all required fields correctly.");
     }
   };
 
@@ -116,6 +130,8 @@ const TeamRegistrationForm = () => {
             </div>
             <h2 className="text-2xl font-semibold text-gray-800">Team Registration</h2>
           </div>
+
+          {formError && <div className="text-red-500 mb-4">{formError}</div>} {/* Show global form error */}
 
           <form onSubmit={handleSubmit} className="space-y-8">
             {/* Team Lead Section */}
