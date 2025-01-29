@@ -1,0 +1,128 @@
+.home_bar{
+    /* background: url("https://images.ctfassets.net/8aevphvgewt8/2CdifjxGvOIsZkVJqr0sQn/5a19319d6ed5cc1a778d3ca9c272a943/students.webp?fm=webp"); */
+    background-size: cover;
+    background-color: #fff;
+
+
+    background-repeat: no-repeat;
+    
+    
+}
+.hero{
+    padding: 30px;
+    padding-left: 6%;
+    display: flex; 
+    gap: 40px;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    /* height: 100%; */
+}
+.left{
+    display: flex;flex-direction: column;
+    gap: 20px;
+}
+.left h1{
+    font-size: 60px;
+    background: radial-gradient( circle 897px at 9% 80.3%,  rgba(55,60,245,1) 0%, rgba(234,161,15,0.90) 100.2% );;
+
+
+   
+
+
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    /* color: #323232; */
+    
+}
+.round_bar{
+    height: 40px;
+    width: 200px;
+    border-radius: 30px;
+    border: 1px solid rgb(53, 53, 53);
+    display: flex;justify-content: center;align-items: center;
+}
+.home_btn{
+    height: 3rem;
+   width: 300px;
+   display: flex;
+   justify-content: center;align-items: center;
+    border-radius: 0.5rem;
+    color: white;
+    background-color: #1f2328;
+}
+.letf img{
+    width: 400px;
+}
+
+
+@media only screen and (min-width:100px) and (max-width: 800px) {
+
+    .left h1 { 
+       font-size: 34px; 
+    }
+    .left { 
+       gap: 30px;
+       
+     }
+     .left{
+        margin-top: 40px;
+     }
+ 
+ }
+ .events{
+    display:flex;
+    justify-content: center;align-items: center;width: 100%;flex-direction: column;
+   margin-top: 60px;
+    gap: 30px;
+
+ }
+ .eventtext{
+    width: 100%;
+    display: flex;justify-content: center;align-items: center;
+ }
+ .card1{
+    background-color: #0284fe1f;
+    /* height: 400px; */
+    width: 400px;
+    display: flex;
+    border-radius: 12px;flex-direction: column;
+    gap: 20px;
+ }
+ .cardcontainerev{
+    display: flex;gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;align-items: center;
+ }
+ .bgimg{
+    height: 300px;
+    width: 100%;
+     
+}
+.bgimg12{
+    background: url("https://appmaster.io/images/no-code-preview.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+}
+.bgimg123{
+    background: url("https://mulearn.org/assets/gallery/permute/permute_54.webp");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+}
+.tiltecon{
+    padding-left: 30px;
+}
+.btncontev{
+    display: flex;justify-content: center;align-items: center;margin-bottom: 20px;
+}
+.tiltecon p{
+    font-size: 12px;
+    width: 90%;
+    height: 160px;
+}
+.eventtext{
+    font-size: 30px;
+    font-weight: 600;
+}

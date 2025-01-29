@@ -4,8 +4,11 @@
 
 .forms h1{
     /* font-size: 34px; */
-    color:royalblue;
+    color:#139c51;
     font-weight: 400;
+}
+.forms{
+  background: url("https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
 }
 .card1{
     display: flex;justify-content: center;align-items: center;
@@ -57,7 +60,8 @@ p{color: rgb(0, 0, 0);}
     flex-direction: column;
     gap: 10px;
     max-width: 350px;
-    background-color: #fff;
+    background: url("https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+    /* background-color: #fff; */
     padding: 20px;
     border-radius: 20px;
     position: relative;
