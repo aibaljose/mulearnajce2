@@ -1,0 +1,8 @@
+[
+    {
+      "origin": ["https://acmajce-explore.vercel.app"],
+      "method": ["GET", "POST", "PUT", "DELETE"],
+      "maxAgeSeconds": 3600
+    }
+  ]
+  
