@@ -18,6 +18,8 @@
 import { initializeApp } from "firebase/app";
 import { getDatabase } from "firebase/database";
 import { ref, push, set } from 'firebase/database';
+import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAflzRHw81hheIVNx7kaLDjJeAF2jqMUvQ",
@@ -32,6 +34,9 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
+export const db = getFirestore(app);
 
+// Initialize Firebase Storage for file uploads
+export const storage = getStorage(app);
 export { database,ref, push, set };
 
