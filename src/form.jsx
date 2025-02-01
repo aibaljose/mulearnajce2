@@ -24,6 +24,7 @@ const TeamRegistrationForm = () => {
   const [errors, setErrors] = useState({});
   const [formError, setFormError] = useState("");
   const [showQRCode, setShowQRCode] = useState(false); // State to toggle QR code visibility
+  const [showModal, setShowModal] = useState(false); // State for modal visibility
 
   const handleTeamLeadChange = (e) => {
     const { name, value } = e.target;
@@ -82,8 +83,7 @@ const TeamRegistrationForm = () => {
         );
 
         console.log('Team registered successfully!');
-        navigate('/ticket');
-
+        setShowModal(true); // Show modal after successful registration
       } catch (error) {
         setFormError("Error adding team. Please try again later.");
         console.error('Error adding team: ', error);
@@ -93,10 +93,15 @@ const TeamRegistrationForm = () => {
     }
   };
 
+  const handleModalClose = () => {
+    setShowModal(false); // Close modal
+    navigate('/ticket'); // Redirect to ticket page
+  };
+
   const inputClassName = "w-full px-4 py-3 rounded-xl border border-gray-100 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 outline-none transition-all";
   const errorClassName = "text-red-500 text-sm mt-1";
 
-  const googlePayLink = "upi://pay?pa=aibaljosej@okicici&pn=Aibal%20Jose&am=500.00&cu=INR&aid=uGICAgIDN9PurFAi";
+  const googlePayLink = "upi://pay?pa=alfredpbenjamin@okaxis&pn=Alfred%20P%20Benjamin&am=500.00&cu=INR&aid=uGICAgMCoo8rDJg";
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
@@ -165,11 +170,13 @@ const TeamRegistrationForm = () => {
             <div>
               <h3 className="text-lg font-semibold text-gray-700 mb-4">Payment</h3>
               <div style={{ textAlign: "center", marginBottom: "20px" }}>
-                <Link to={googlePayLink}>
-                  <h2 className="text-xl text-blue-500 cursor-pointer" onClick={() => setShowQRCode(!showQRCode)}>
-                    Pay ₹500 using Google Pay
-                  </h2>
-                </Link>
+                <button
+                  type="button"
+                  className="px-6 py-3 bg-purple-500 text-white rounded-xl hover:bg-purple-600 transition-colors font-medium"
+                  onClick={() => setShowQRCode(!showQRCode)}
+                >
+                  Pay ₹500 using Google Pay
+                </button>
                 {showQRCode && (
                   <div className="mt-4">
                     <QRCode value={googlePayLink} size={128} />
@@ -195,6 +202,32 @@ const TeamRegistrationForm = () => {
           </form>
         </div>
       </div>
+
+      {/* Modal for WhatsApp Group and Ticket Redirect */}
+      {showModal && (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50">
+          <div className="bg-white p-8 rounded-xl max-w-md">
+            <h3 className="text-lg font-semibold mb-4">Join the WhatsApp Group</h3>
+            <p>Click below to join the WhatsApp group for further updates!</p>
+            <Link
+              to="https://chat.whatsapp.com/DdejWktUBybJQX0AduOQab" // Replace with actual group link
+              className="text-blue-500 underline mt-4 block"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Join WhatsApp Group
+            </Link>
+            <div className="mt-4">
+              <button
+                onClick={handleModalClose}
+                className="px-6 py-3 bg-purple-500 text-white rounded-xl hover:bg-purple-600 transition-colors"
+              >
+                Go to Ticket
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

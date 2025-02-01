@@ -1,118 +1,175 @@
-import React, { useState, useEffect } from "react";
-import logo from "./assets/logo-2.png";
-import { useNavigate } from "react-router-dom";
-import "./form.css";
-import "./App.css";
+import React, { useEffect, useState } from "react";
+import * as THREE from "three";
+import {Link} from "react-router-dom"
+import "./style.css";
 
-const Home = () => {
-  const navigate = useNavigate();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [countdown, setCountdown] = useState("");
+const UXplore = () => {
+  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
-  const handleButtonClick = () => {
-    navigate("/register");
-  };
-
-  // Countdown Timer Logic
   useEffect(() => {
-    const targetDate = new Date("2025-02-20T00:00:00Z");
-    const interval = setInterval(() => {
-      const now = new Date();
-      const timeDifference = targetDate - now;
-
-      if (timeDifference <= 0) {
-        setCountdown("The event has started!");
-        clearInterval(interval);
-      } else {
-        const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
-        setCountdown(`${days}d ${hours}h ${minutes}m ${seconds}s`);
+    const script = document.createElement("script");
+    script.src = "https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js";
+    script.async = true;
+    script.onload = () => {
+      if (window.particlesJS) {
+        window.particlesJS("particles-js", {
+          particles: {
+            number: { value: 100 },
+            size: { value: 3 },
+            move: { speed: 1 },
+          },
+        });
       }
-    }, 1000);
+    };
+    document.body.appendChild(script);
+  }, []);
 
+  useEffect(() => {
+    const countdownDate = new Date("February 20, 2025 00:00:00").getTime();
+
+    const updateCountdown = () => {
+      const now = new Date().getTime();
+      const difference = countdownDate - now;
+
+      if (difference < 0) {
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+        return;
+      }
+
+      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+      setTimeLeft({ days, hours, minutes, seconds });
+    };
+
+    const interval = setInterval(updateCountdown, 1000);
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.getElementById("three-container").appendChild(renderer.domElement);
+
+    const geometry = new THREE.TorusKnotGeometry(10, 3, 100, 16);
+    const material = new THREE.MeshBasicMaterial({ color: 0xff6347, wireframe: true });
+    const torusKnot = new THREE.Mesh(geometry, material);
+    scene.add(torusKnot);
+
+    camera.position.z = 50;
+
+    const animate = function () {
+      requestAnimationFrame(animate);
+      torusKnot.rotation.x += 0.01;
+      torusKnot.rotation.y += 0.01;
+      renderer.render(scene, camera);
+    };
+
+    animate();
+  }, []);
+
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
-      <header className="flex justify-between items-center p-6 md:px-10">
-        <h1 className="text-4xl font-bold text-yellow-400 text-shadow">UXPLORE</h1>
-        <button
-          className="md:hidden text-white text-2xl"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-        >
-          &#9776;
-        </button>
-        <nav
-          className={`absolute md:static bg-gray-900 w-full md:w-auto top-16 left-0 md:flex space-x-6 transition-transform transform ${isMenuOpen ? "block" : "hidden"
-            }`}
-        >
-          <ul className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6 text-center">
-            <li className="text-yellow-400 hover:text-yellow-300 transform hover:scale-105 transition-all">About</li>
-            <li className="text-yellow-400 hover:text-yellow-300 transform hover:scale-105 transition-all">Events</li>
-            <li className="text-yellow-400 hover:text-yellow-300 transform hover:scale-105 transition-all">Speakers</li>
-            <li className="text-yellow-400 hover:text-yellow-300 transform hover:scale-105 transition-all">Gallery</li>
-            <li className="text-yellow-400 hover:text-yellow-300 transform hover:scale-105 transition-all">Contact</li>
-          </ul>
-        </nav>
-      </header>
-
-      <section className="text-center py-20 relative" style={{
-        backgroundImage: `url('https://images.unsplash.com/photo-1553877522-43269d4ea984?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')`,
-        backgroundPosition: "center center",
-        backgroundSize: "cover",
-      }}>
-        <div className="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-lg"></div>
-
-        <div className="flex justify-center mb-10 relative">
-          <img
-            src={logo}
-            alt="UXPLORE Logo"
-            className="w-[500px] mb-6 transform hover:scale-105 transition-all duration-300"
-          />
-        </div>
-
-        <h2 className=" relative text-5xl font-bold text-white text-shadow">UXPLORE - UI HACKATHON</h2>
-        <p className=" relative mt-4 max-w-2xl mx-auto text-lg">
-          The ultimate UI design challenge at our college! Collaborate, innovate, and create stunning user experiences.
-        </p>
-        <p className=" relative mt-6 text-2xl font-semibold text-white">{countdown}</p>
-        <button
-          onClick={handleButtonClick}
-          className="mt-6 bg-black text-yellow-400 py-3 px-8 rounded-xl text-xl hover:bg-yellow-400 hover:text-black transition-all transform hover:scale-105 shadow-xl"
-        >
-          Register Now
-        </button>
-      </section>
-
+    <div>
+      <div id="particles-js"></div>
+      <div id="three-container"></div>
       
-      {/* <section className="p-10 bg-gray-800 text-yellow-400">
-        <h3 className="text-3xl font-bold mb-6 text-shadow">Event Highlights</h3>
-        <div className="bg-gray-700 p-6 rounded-lg text-center transform hover:scale-105 transition-all shadow-2xl">
-          <h4 className="text-2xl font-semibold">UI/UX Hackathon</h4>
-          <p>Amal Jyothi College of Engineering - Coming Soon</p>
-          <p className="mt-4 text-lg font-semibold">Date & Venue:</p>
-          <p>20 February, 2025, Amal Jyothi College of Engineering, Kanjirappally</p>
-          <p className="mt-4 text-lg font-semibold">Contact Us:</p>
-          <p>Evana Ann Benny: +91 77368 39462</p>
-          <p>Alfred P Benjamin: +91 90722 78549</p>
-          <p className="mt-4 text-lg font-semibold">Details:</p>
-          <ul className="list-disc list-inside text-left">
-            <li>Inter-College Hackathon – Open to students from various colleges</li>
-            <li>UI/UX Redesign Challenge – Participants must redesign two existing websites using Figma</li>
-            <li>Team-Based Competition – Each team consists of 3 members</li>
-            <li>Exciting Prize Pool – ₹12,000 in total</li>
-          </ul>
-          <p className="mt-6 text-2xl font-semibold text-white">{countdown}</p> 
-          <button className="mt-4 bg-yellow-400 text-black py-2 px-6 rounded-lg shadow-lg hover:shadow-2xl hover:bg-black hover:text-yellow-400 transition-all">
-            Join Now
-          </button>
-        </div>
-      </section> */}
+      <main>
+        <nav>
+          <div className="logo">
+            <img src="https://envs.sh/aOS.png" alt="UXplore Logo" />
+          </div>
+          <div className="nav-links">
+            <a href="#about">About</a>
+            <a href="#schedule">Schedule</a>
+            <a href="#judges">Judges</a>
+            <a href="#guidelines">Guidelines</a>
+            <Link to="/register">
+            <button className="register-btn">Register Now</button>
+            </Link>
+         
+          </div>
+        </nav>
+
+        <section className="hero">
+          <h1>UXplore</h1>
+          <p className="tagline">Innovate. Design. Inspire</p>
+          <div className="timer">
+            {Object.entries(timeLeft).map(([label, value]) => (
+              <div className="time-block" key={label}>
+                <span>{value}</span>
+                <label>{label.charAt(0).toUpperCase() + label.slice(1)}</label>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section id="about" className="about">
+          <div className="section-content">
+            <h2>About UXplore</h2>
+            <p>Join us for an exciting UI/UX hackathon where creativity meets technology...</p>
+          </div>
+        </section>
+
+        <section id="schedule" className="event-details">
+          <div className="section-content">
+            <h2>Event Schedule</h2>
+            <div className="schedule">
+              {[
+                { time: "9:00 AM", event: "Hackathon Begins" },
+                { time: "12:00 PM", event: "Band Performance" },
+                { time: "2:00 PM", event: "Cultural Events" },
+                { time: "3:00 PM", event: "Event Concludes" },
+              ].map((item, index) => (
+                <div className="schedule-item" key={index}>
+                  <time>{item.time}</time>
+                  <p>{item.event}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+        <section id="judges" className="judges">
+          <div className="section-content">
+            <h2>Meet Our Judges</h2>
+            <div className="judges-grid">
+              {[1, 2].map((num) => (
+                <div className="judge-card" key={num}>
+                  <div className="judge-image">
+                    <img src={["https://media.licdn.com/dms/image/v2/D5603AQGKKrkA8M0sfw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1730905428429?e=1743638400&v=beta&t=hLncOWsxnDksXJFe5DJ0QJ3I-SSpqWIZGvhST8VkJhE", "https://media.licdn.com/dms/image/v2/D5603AQGaLGJgsnCMiQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1706876727082?e=1743638400&v=beta&t=YbCFqzoc_c9QjXRlpQzdWfw2aiww6aXJKSd9zH8w7PY"][num - 1]} alt={`Judge ${num}`} />
+                  </div>
+                  <h3>{["Vignesh", "Kiran C K "][num - 1]}</h3>
+                  <p>{["Product Designer at Air India Limited", "Senior Visual Designer at NetBramha"][num - 1]}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="guidelines" className="guidelines">
+          <div className="section-content">
+            <h2>Guidelines</h2>
+            <div className="guidelines-grid">
+              {[
+                { title: "Team Size", description: "2-4 members per team" },
+                { title: "Duration", description: "6 hours of intense designing" },
+                { title: "Submission", description: "Prototype + Presentation" },
+                { title: "Judging Criteria", description: "Innovation, Usability, Visual Design" },
+              ].map((item, index) => (
+                <div className="guideline-card" key={index}>
+                  <h3>{item.title}</h3>
+                  <p>{item.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      </main>
     </div>
   );
 };
 
-export default Home;
+export default UXplore;
