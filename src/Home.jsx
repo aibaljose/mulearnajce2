@@ -133,10 +133,11 @@ const UXplore = () => {
             <h2>Event Schedule</h2>
             <div className="schedule">
               {[
-                { time: "9:00 AM", event: "Hackathon Begins" },
-                { time: "12:00 PM", event: "Band Performance" },
-                { time: "2:00 PM", event: "Cultural Events" },
-                { time: "3:00 PM", event: "Event Concludes" },
+                { time: "9:00 AM", event: "Hackathon Registration" },
+                { time: "10:00 AM - 3:00 PM", event: "Hackathon" },
+                { time: "1:30 PM - 2:00 PM", event: "Lunch" },
+                { time: "3:00 PM - 5:00 PM", event: "Cultural Events" },
+               
               ].map((item, index) => (
                 <div className="schedule-item" key={index}>
                   <time>{item.time}</time>
