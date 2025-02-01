@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import * as THREE from "three";
 import {Link} from "react-router-dom"
 import "./style.css";
+import rahu from "./assets/rehu.jpeg"
+import ResponsiveNav from "./nav"
 
 const UXplore = () => {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
@@ -78,7 +80,12 @@ const UXplore = () => {
       <div id="three-container"></div>
       
       <main>
-        <nav>
+
+      <ResponsiveNav/>
+
+
+
+        {/* <nav>
           <div className="logo">
             <img src="https://envs.sh/aOS.png" alt="UXplore Logo" />
           </div>
@@ -92,7 +99,7 @@ const UXplore = () => {
             </Link>
          
           </div>
-        </nav>
+        </nav> */}
 
         <section className="hero">
           <h1>UXplore</h1>
@@ -104,13 +111,20 @@ const UXplore = () => {
                 <label>{label.charAt(0).toUpperCase() + label.slice(1)}</label>
               </div>
             ))}
+            
           </div>
+          <Link to="/register">
+          <button className=" mt-[30px] w-full bg-[#31b041] text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200">
+              Register Now
+            </button>
+          </Link>
+        
         </section>
 
         <section id="about" className="about">
           <div className="section-content">
             <h2>About UXplore</h2>
-            <p>Join us for an exciting UI/UX hackathon where creativity meets technology...</p>
+            <p>UXplore is ACM AJCE’s flagship inter-college design hackathon, where creativity meets functionality. It challenges participants to revamp real-world UI/UX designs, pushing innovation to the next level. Open to beginners and pros alike, UXplore is the perfect platform to showcase skills, gain industry insights, and compete with top design talents. 🚀</p>
           </div>
         </section>
 
@@ -136,13 +150,13 @@ const UXplore = () => {
           <div className="section-content">
             <h2>Meet Our Judges</h2>
             <div className="judges-grid">
-              {[1, 2].map((num) => (
+              {[1, 2,3].map((num) => (
                 <div className="judge-card" key={num}>
                   <div className="judge-image">
-                    <img src={["https://media.licdn.com/dms/image/v2/D5603AQGKKrkA8M0sfw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1730905428429?e=1743638400&v=beta&t=hLncOWsxnDksXJFe5DJ0QJ3I-SSpqWIZGvhST8VkJhE", "https://media.licdn.com/dms/image/v2/D5603AQGaLGJgsnCMiQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1706876727082?e=1743638400&v=beta&t=YbCFqzoc_c9QjXRlpQzdWfw2aiww6aXJKSd9zH8w7PY"][num - 1]} alt={`Judge ${num}`} />
+                    <img src={["https://media.licdn.com/dms/image/v2/D5603AQGKKrkA8M0sfw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1730905428429?e=1743638400&v=beta&t=hLncOWsxnDksXJFe5DJ0QJ3I-SSpqWIZGvhST8VkJhE", "https://media.licdn.com/dms/image/v2/D5603AQGaLGJgsnCMiQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1706876727082?e=1743638400&v=beta&t=YbCFqzoc_c9QjXRlpQzdWfw2aiww6aXJKSd9zH8w7PY",rahu][num - 1]} alt={`Judge ${num}`} />
                   </div>
-                  <h3>{["Vignesh", "Kiran C K "][num - 1]}</h3>
-                  <p>{["Product Designer at Air India Limited", "Senior Visual Designer at NetBramha"][num - 1]}</p>
+                  <h3>{["Vignesh", "Kiran C K ","Gautham Reghu"][num - 1]}</h3>
+                  <p>{["Product Designer at Air India Limited", "Senior Visual Designer at NetBramha","One of top 5 designers in India"][num - 1]}</p>
                 </div>
               ))}
             </div>
@@ -154,7 +168,7 @@ const UXplore = () => {
             <h2>Guidelines</h2>
             <div className="guidelines-grid">
               {[
-                { title: "Team Size", description: "2-4 members per team" },
+                { title: "Team Size", description: "3 members per team" },
                 { title: "Duration", description: "6 hours of intense designing" },
                 { title: "Submission", description: "Prototype + Presentation" },
                 { title: "Judging Criteria", description: "Innovation, Usability, Visual Design" },
