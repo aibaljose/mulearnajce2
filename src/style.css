@@ -6,20 +6,9 @@
     --card-bg: rgba(255, 255, 255, 0.05);
   }
   
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    scroll-behavior: smooth;
-  }
+  #home123{
+
   
-  body {
-    font-family: 'Inter', sans-serif;
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    overflow-x: hidden;
-    line-height: 1.6;
-  }
   
   #particles-js {
     position: fixed;
@@ -548,3 +537,5 @@
       grid-template-columns: 1fr;
     }
   }
+
+}
