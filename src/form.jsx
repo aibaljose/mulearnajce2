@@ -170,6 +170,8 @@ const TeamRegistrationForm = () => {
             <div>
               <h3 className="text-lg font-semibold text-gray-700 mb-4">Payment</h3>
               <div style={{ textAlign: "center", marginBottom: "20px" }}>
+
+                <Link to={googlePayLink}>
                 <button
                   type="button"
                   className="px-6 py-3 bg-purple-500 text-white rounded-xl hover:bg-purple-600 transition-colors font-medium"
@@ -177,6 +179,8 @@ const TeamRegistrationForm = () => {
                 >
                   Pay ₹500 using Google Pay
                 </button>
+                </Link>
+                
                 {showQRCode && (
                   <div className="mt-4">
                     <QRCode value={googlePayLink} size={128} />
