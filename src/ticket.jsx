@@ -5,7 +5,7 @@ import "./ticket.css";
 
 const Ticket = () => {
     // Retrieve 'users' from localStorage
-    const ticketData = JSON.parse(localStorage.getItem("users"));
+    const ticketData = JSON.parse(localStorage.getItem("ticketData"));
     const teamLead = ticketData?.teamLead || {};
     const members = ticketData?.members || [];
 
@@ -33,6 +33,7 @@ const Ticket = () => {
                             <div className="details mt-2 border-2 p-3 rounded-md">
                                 <h1><b>{teamLead.name || "Not valid"}</b></h1>
                                 <h1>{teamLead.course || "Not valid"}</h1>
+                                {console.log(teamLead.course)}
                             </div>
                             <div className="details mt-2 border p-3 rounded-md text-center flex-wrap items-center justify-center">
                                 <h1>UI/UX Redesign Challenge</h1>
