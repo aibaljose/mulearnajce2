@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { database, ref, onValue, remove } from './firebase';
-import { Activity, Trash2, Edit, Eye, Users } from 'lucide-react';
+import { Activity, Trash2, Edit, Eye, Users, Download } from 'lucide-react';
 
 const ViewList = () => {
   const [teams, setTeams] = useState([]);
@@ -13,15 +13,15 @@ const ViewList = () => {
       const teamsRef = ref(database, 'teams');
       const unsubscribe = onValue(teamsRef, (snapshot) => {
         if (snapshot.exists()) {
-          const teamsArray = [];
+          const uniqueTeams = new Map();
           snapshot.forEach((childSnapshot) => {
             const team = {
               id: childSnapshot.key,
               ...childSnapshot.val()
             };
-            teamsArray.push(team);
+            uniqueTeams.set(team.teamName, team);
           });
-          setTeams(teamsArray);
+          setTeams(Array.from(uniqueTeams.values()));
         } else {
           setTeams([]);
         }
@@ -30,7 +30,6 @@ const ViewList = () => {
         setError(error.message);
         setLoading(false);
       });
-
       return () => unsubscribe();
     } catch (err) {
       setError(err.message);
@@ -53,38 +52,30 @@ const ViewList = () => {
     setExpandedTeam(expandedTeam === teamId ? null : teamId);
   };
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-100">
-        <div className="bg-white p-6 rounded-lg shadow-lg">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-500 mx-auto"></div>
-          <p className="text-center mt-4">Loading teams...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-100">
-        <div className="bg-white p-6 rounded-lg shadow-lg">
-          <div className="text-red-500 text-center">
-            <p className="font-semibold">Error loading teams</p>
-            <p className="text-sm mt-2">{error}</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  const handleBackup = () => {
+    const jsonString = `data:text/json;charset=utf-8,${encodeURIComponent(
+      JSON.stringify(teams, null, 2)
+    )}`;
+    const link = document.createElement("a");
+    link.href = jsonString;
+    link.download = "teams_backup.json";
+    link.click();
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
       <div className="max-w-7xl mx-auto">
         <div className="bg-white rounded-lg shadow overflow-hidden">
-          <div className="px-6 py-4 border-b border-gray-200">
+          <div className="flex justify-between items-center px-6 py-4 border-b border-gray-200">
             <h2 className="text-xl font-semibold text-gray-800">Registered Teams</h2>
+            <button
+              className="flex items-center bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+              onClick={handleBackup}
+            >
+              <Download size={18} className="mr-2" /> Backup Data
+            </button>
           </div>
-          
+
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
@@ -117,23 +108,11 @@ const ViewList = () => {
                   teams.map((team) => (
                     <React.Fragment key={team.id}>
                       <tr className="hover:bg-gray-50">
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="flex items-center">
-                            <div className="flex-shrink-0 h-10 w-10 bg-purple-100 rounded-full flex items-center justify-center">
-                              <span className="text-purple-600 font-medium">
-                                {team.teamName?.charAt(0)?.toUpperCase() || '?'}
-                              </span>
-                            </div>
-                            <div className="ml-4">
-                              <div className="text-sm font-medium text-gray-900">
-                                {team.teamName || 'Unnamed Team'}
-                              </div>
-                            </div>
-                          </div>
+                        <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
+                          {team.teamName}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-900">{team.teamLead?.name || 'No lead'}</div>
-                          <div className="text-sm text-gray-500">{team.teamLead?.email || 'No email'}</div>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                          {team.teamLead?.name || 'No lead'}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <button
@@ -152,23 +131,13 @@ const ViewList = () => {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                           <div className="flex space-x-3">
-                            <button 
-                              className="text-blue-600 hover:text-blue-900"
-                              title="View Details"
-                            >
+                            <button className="text-blue-600 hover:text-blue-900">
                               <Eye size={18} />
                             </button>
-                            <button 
-                              className="text-green-600 hover:text-green-900"
-                              title="Edit Team"
-                            >
+                            <button className="text-green-600 hover:text-green-900">
                               <Edit size={18} />
                             </button>
-                            <button 
-                              className="text-red-600 hover:text-red-900"
-                              title="Delete Team"
-                              onClick={() => handleDelete(team.id)}
-                            >
+                            <button className="text-red-600 hover:text-red-900" onClick={() => handleDelete(team.id)}>
                               <Trash2 size={18} />
                             </button>
                           </div>
@@ -179,10 +148,8 @@ const ViewList = () => {
                           <td colSpan="5" className="px-6 py-4 bg-gray-50">
                             <ul className="text-sm text-gray-700">
                               {team.members?.length > 0 ? (
-                                team.members.map((member, index) => (
-                                  <li key={index} className="py-1">
-                                    {member.name} - {member.email}
-                                  </li>
+                                [...new Set(team.members.map((member) => `${member.name} - ${member.email}`))].map((member, index) => (
+                                  <li key={index} className="py-1">{member}</li>
                                 ))
                               ) : (
                                 <li className="text-gray-500">No members listed</li>
