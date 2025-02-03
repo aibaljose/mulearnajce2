@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { database, ref, onValue, remove } from './firebase';
-import { Activity, Trash2, Edit, Eye, Users, Download } from 'lucide-react';
+import { Activity, Trash2, Edit, Eye, Users, Download, ChevronDown } from 'lucide-react';
 
 const ViewList = () => {
   const [teams, setTeams] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [expandedTeam, setExpandedTeam] = useState(null);
+  const [expandedTransaction, setExpandedTransaction] = useState(null);
 
   useEffect(() => {
     try {
@@ -52,6 +53,10 @@ const ViewList = () => {
     setExpandedTeam(expandedTeam === teamId ? null : teamId);
   };
 
+  const toggleTransactionId = (teamId) => {
+    setExpandedTransaction(expandedTransaction === teamId ? null : teamId);
+  };
+
   const handleBackup = () => {
     const jsonString = `data:text/json;charset=utf-8,${encodeURIComponent(
       JSON.stringify(teams, null, 2)
@@ -84,10 +89,10 @@ const ViewList = () => {
                     Team Name
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Team Lead
+                    College Name
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    College Name
+                    Team Lead
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Members
@@ -115,10 +120,10 @@ const ViewList = () => {
                           {team.teamName}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                          {team.teamLead?.name || 'No lead'}
+                          {team.teamLead?.college || 'Not provided'}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                          {team.teamLead?.college || 'No college name'}
+                          {team.teamLead?.name || 'No lead'}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <button
@@ -130,10 +135,19 @@ const ViewList = () => {
                           </button>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                            ${team.transactionId ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}`}>
+                          <button
+                            className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full focus:outline-none 
+                              ${team.transactionId ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}`}
+                            onClick={() => team.transactionId && toggleTransactionId(team.id)}
+                          >
                             {team.transactionId ? 'Paid' : 'Pending'}
-                          </span>
+                            {team.transactionId && <ChevronDown size={16} className="ml-1" />}
+                          </button>
+                          {expandedTransaction === team.id && team.transactionId && (
+                            <div className="mt-2 p-2 bg-green-100 text-green-800 text-sm rounded">
+                              Transaction ID: {team.transactionId}
+                            </div>
+                          )}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                           <div className="flex space-x-3">
