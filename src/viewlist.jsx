@@ -87,6 +87,9 @@ const ViewList = () => {
                     Team Lead
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    College Name
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Members
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -100,7 +103,7 @@ const ViewList = () => {
               <tbody className="bg-white divide-y divide-gray-200">
                 {teams.length === 0 ? (
                   <tr>
-                    <td colSpan="5" className="px-6 py-4 text-center text-sm text-gray-500">
+                    <td colSpan="6" className="px-6 py-4 text-center text-sm text-gray-500">
                       No teams registered yet
                     </td>
                   </tr>
@@ -113,6 +116,9 @@ const ViewList = () => {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                           {team.teamLead?.name || 'No lead'}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                          {team.teamLead?.college || 'No college name'}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <button
@@ -145,7 +151,7 @@ const ViewList = () => {
                       </tr>
                       {expandedTeam === team.id && (
                         <tr>
-                          <td colSpan="5" className="px-6 py-4 bg-gray-50">
+                          <td colSpan="6" className="px-6 py-4 bg-gray-50">
                             <ul className="text-sm text-gray-700">
                               {team.members?.length > 0 ? (
                                 [...new Set(team.members.map((member) => `${member.name} - ${member.email}`))].map((member, index) => (
@@ -157,8 +163,6 @@ const ViewList = () => {
                             </ul>
                           </td>
                         </tr>
-
-                        
                       )}
                     </React.Fragment>
                   ))
