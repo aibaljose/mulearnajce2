@@ -6,7 +6,7 @@ import Ticket from "./ticket"
 import Form from "./form"
 import Dashboard from "./dashboard"
 import Navbar from "./NavBar"
-
+import Dashboard1 from  './viewlist';
 import Landingpage from "./LandingPage"
 
 const App = () => {
@@ -23,6 +23,7 @@ const App = () => {
           <Route path="/ticket"  Component={Ticket} />
           <Route path="/dashboard"  Component={Dashboard} />
           <Route path="/la"  Component={Landingpage} />
+          <Route path="/view"  Component={Dashboard1} />
         </Routes>
 
       </div>

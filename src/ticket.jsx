@@ -93,8 +93,8 @@ const Ticket = () => {
                                 <h1>Course</h1>
                             </div>
                             <div className="details mt-2 border-2 p-3 rounded-md">
-                                <h1><b>{ticketData?.teamName || teamLead.name || "Not valid"}</b></h1>
-                                <h1>{teamLead.course || "Not valid"}</h1>
+                                <h1><b>{ticketData?.teamName || teamLead.name || "invalid"}</b></h1>
+                                <h1>{teamLead.course || "invalid"}</h1>
                             </div>
                             <div className="details mt-2 border p-3 rounded-md text-center flex-wrap items-center justify-center">
                                 <h1>UI/UX Redesign Challenge</h1>
@@ -104,9 +104,14 @@ const Ticket = () => {
                         </div>
                         <div className="receipt qr-code">
                             <img src={qr} alt="" className="qr" />
-                            <div className="text-[#3f32e5] ml-4 text-[30px] flex justify-center items-center">
-                                <b>Participant</b>
+                         
+                            <div className="text-[#3f32e5] ml-4 text-[30px] flex flex-col justify-center items-center">
+                                <b>Organizer</b>
+                                <p className='text-[12px]'>[ACM AJCE Web Master]</p>
+                           
                             </div>
+                            
+                         
                         </div>
                     </div>
                 </div>
