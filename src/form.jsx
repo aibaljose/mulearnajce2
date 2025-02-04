@@ -107,7 +107,7 @@ const TeamRegistrationForm = () => {
   const inputClassName = "w-full px-4 py-3 rounded-xl border border-gray-100 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 outline-none transition-all";
   const errorClassName = "text-red-500 text-sm mt-1";
 
-  const googlePayLink = "upi://pay?pa=ashishshabu2@oksbi&pn=Ashish%20Shabu&am=500.00&cu=INR&aid=uGICAgMDUk-fOeg";
+  const googlePayLink = "upi://pay?pa=evanahannah@okicici&pn=Evana%20Hannah&aid=uGICAgICT7ZnDBA";
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
