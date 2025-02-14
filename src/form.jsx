@@ -70,33 +70,35 @@ const TeamRegistrationForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formErrors = validateForm();
+
     setErrors(formErrors);
+    setFormError("Registration closed");
 
-    if (Object.keys(formErrors).length === 0) {
-      try {
-        const teamRef = ref(database, "teams");
-        const newTeam = push(teamRef);
-        await set(newTeam, {
-          teamName,
-          teamLead,
-          members,
-          transactionId,
-        });
+    // if (Object.keys(formErrors).length === 0) {
+    //   try {
+    //     const teamRef = ref(database, "teams");
+    //     const newTeam = push(teamRef);
+    //     await set(newTeam, {
+    //       teamName,
+    //       teamLead,
+    //       members,
+    //       transactionId,
+    //     });
 
-        localStorage.setItem(
-          "ticketData",
-          JSON.stringify({ teamName, teamLead, members, transactionId })
-        );
+    //     localStorage.setItem(
+    //       "ticketData",
+    //       JSON.stringify({ teamName, teamLead, members, transactionId })
+    //     );
 
-        console.log('Team registered successfully!');
-        setShowModal(true);
-      } catch (error) {
-        setFormError("Error adding team. Please try again later.");
-        console.error('Error adding team: ', error);
-      }
-    } else {
-      setFormError("Please fill in all required fields correctly.");
-    }
+    //     console.log('Team registered successfully!');
+    //     setShowModal(true);
+    //   } catch (error) {
+    //     setFormError("Error adding team. Please try again later.");
+    //     console.error('Error adding team: ', error);
+    //   }
+    // } else {
+    //   setFormError("Please fill in all required fields correctly.");
+    // }
   };
 
   const handleModalClose = () => {
