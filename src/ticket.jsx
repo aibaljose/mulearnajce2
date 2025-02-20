@@ -106,8 +106,8 @@ const Ticket = () => {
                             <img src={qr} alt="" className="qr" />
                          
                             <div className="text-[#3f32e5] ml-4 text-[30px] flex flex-col justify-center items-center">
-                                <b>Organizer</b>
-                                <p className='text-[12px]'>[ACM AJCE Web Master]</p>
+                                <b>Participant</b>
+                                <p className='text-[12px]'>[ACM AJCE]</p>
                            
                             </div>
                             
